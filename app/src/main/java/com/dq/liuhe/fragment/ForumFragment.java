@@ -140,12 +140,9 @@ public class ForumFragment extends BaseFragment {
         map.put("pagesize", "" + pagesize);
         map.put("bbstypeid", bbstypeid);
         map.put("uid", MyApplication.uid);
-//        map.put("mid", mid);
-//        map.put("id", id);
-//        map.put("bestis", bestid);
 
         Log.e("FMForum", "BBS_BBSTList-map" + map.toString());
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSLIST, map, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSLIST, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("FMForum", "BBS_BBSTList" + result);
@@ -196,7 +193,7 @@ public class ForumFragment extends BaseFragment {
         map.put("bbsid", id);
 
         Log.e("FMForum", "BBS_BBSTList-map" + map.toString());
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_SETHITS, map, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),HttpPath.HEADER_LIUHE + HttpPath.BBS_SETHITS, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("FMForum", "BBS_BBSTAddRead" + result);

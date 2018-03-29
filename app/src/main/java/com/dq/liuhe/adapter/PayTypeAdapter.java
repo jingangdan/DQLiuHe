@@ -61,6 +61,7 @@ public class PayTypeAdapter extends RecyclerView.Adapter<PayTypeAdapter.MyViewHo
 //                R.mipmap.icon_error003,
 //                holder.iv);
 
+        System.out.println("111111111111111111111"+list.get(i).getName());
         Glide
                 .with(mContext)
                 .load(HttpPath.NEW_HEADER + list.get(i).getImg())

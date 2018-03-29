@@ -1,18 +1,15 @@
 package com.dq.liuhe.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,7 +21,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dq.liuhe.Interface.HomePageInterface;
@@ -53,7 +49,6 @@ import com.dq.liuhe.view.TopicScrollView;
 
 import org.xutils.common.Callback;
 import org.xutils.ex.HttpException;
-import org.xutils.view.annotation.Event;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -118,8 +113,6 @@ public class FMHomePage extends BaseFragment implements
         view = inflater.inflate(R.layout.fm_homepage, null);
         ButterKnife.bind(this, view);
 
-        startProgressDialog();
-
         getLogin();
 
         pullToRefreshView.setOnHeaderRefreshListener(this);
@@ -146,7 +139,7 @@ public class FMHomePage extends BaseFragment implements
                 if (t < 30){
                     searchLayout.setBackgroundColor(Color.argb(0,0,0,0));
                 }else {
-                    searchLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.search));
+                    searchLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.mycolor));
                 }
             }
         });
@@ -197,12 +190,11 @@ public class FMHomePage extends BaseFragment implements
     public void getIndex(String phone, String token) {
         PATH = HttpPath.HEADER_LIUHE + HttpPath.INDEXT_INDEX;
         System.out.println("首页 = " + PATH);
-        HttpxUtils.Get(PATH, null, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),PATH, null, new Callback.CommonCallback<String>() {
             @SuppressLint("WrongConstant")
             @Override
             public void onSuccess(String result) {
                 System.out.println("首页 = " + result);
-                stopProgressDialog();
                 Index2 index = GsonUtil.gsonIntance().gsonToBean(result, Index2.class);
                 if (index.getStatus() == 1) {
                     linHpNetwork.setVisibility(View.VISIBLE);
@@ -222,10 +214,8 @@ public class FMHomePage extends BaseFragment implements
             @SuppressLint("WrongConstant")
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                stopProgressDialog();
                 linHpNetwork.setVisibility(View.GONE);
                 linHpNonetwork.setVisibility(View.VISIBLE);
-                //toast(ex.getMessage());
                 if (ex instanceof HttpException) {
                     //网络错误
                     HttpException httpEx = (HttpException) ex;
@@ -264,7 +254,7 @@ public class FMHomePage extends BaseFragment implements
 
         System.out.println("签到信息 = " + PATH);
 
-        HttpxUtils.Get(PATH, null, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),PATH, null, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println("签到信息 = " + result);
@@ -314,7 +304,7 @@ public class FMHomePage extends BaseFragment implements
                 MD5Util.getMD5String(MD5_PATH + HttpPath.KEY);
 
         System.out.println("签到 = " + PATH);
-        HttpxUtils.Post(PATH, null,
+        HttpxUtils.Post(getActivity(),PATH, null,
                 new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -514,23 +504,6 @@ public class FMHomePage extends BaseFragment implements
         builder.create().show();
     }
 
-    /*开始dialog*/
-    private void startProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = CustomProgress.createDialog(getActivity());
-            progressDialog.setMessage("请稍候...");
-        }
-        progressDialog.show();
-    }
-
-    /*结束dialog*/
-    private void stopProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-            progressDialog = null;
-        }
-    }
-
     @Override
     public void onFooterRefresh(PullToRefreshView view) {
         pullToRefreshView.postDelayed(new Runnable() {
@@ -552,7 +525,6 @@ public class FMHomePage extends BaseFragment implements
             @Override
             public void run() {
                 searchLayout.setVisibility(View.VISIBLE);
-                startProgressDialog();
                 //刷新数据
                 pullToRefreshView.onHeaderRefreshComplete("更新于:"
                         + Calendar.getInstance().getTime().toLocaleString());

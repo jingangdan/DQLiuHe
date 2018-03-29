@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -23,7 +22,6 @@ import com.dq.liuhe.adapter.classify.ExpandableListViewAdapter;
 import com.dq.liuhe.base.BaseFragment;
 import com.dq.liuhe.bean.goods.Cate;
 import com.dq.liuhe.bean.goods.CateChildren;
-import com.dq.liuhe.ui.GoodsListActivity;
 import com.dq.liuhe.ui.KeywordsActivity;
 import com.dq.liuhe.utils.GsonUtil;
 import com.dq.liuhe.utils.HttpPath;
@@ -105,7 +103,6 @@ public class FMClassify extends BaseFragment {
 
             }
         });
-        startProgressDialog();
         getClassify();
         return view;
     }
@@ -116,12 +113,11 @@ public class FMClassify extends BaseFragment {
     public void getClassify() {
         PATH = HttpPath.PATHS + HttpPath.GOODS_CATE;
         System.out.println("分类 = " + PATH);
-        HttpxUtils.Get(PATH, null, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),PATH, null, new Callback.CommonCallback<String>() {
             @SuppressLint("WrongConstant")
             @Override
             public void onSuccess(String result) {
                 System.out.println("分类 = " + result);
-                stopProgressDialog();
                 linHpNonetwork.setVisibility(View.GONE);
                 linFcNonetwork.setVisibility(View.VISIBLE);
                 Cate cate = GsonUtil.gsonIntance().gsonToBean(result, Cate.class);
@@ -134,7 +130,6 @@ public class FMClassify extends BaseFragment {
             @SuppressLint("WrongConstant")
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                stopProgressDialog();
                 linFcNonetwork.setVisibility(View.GONE);
                 linHpNonetwork.setVisibility(View.VISIBLE);
                 //toast("网络不佳，请重试");
@@ -173,7 +168,7 @@ public class FMClassify extends BaseFragment {
     public void getCateChildren(String cateId) {
         PATH = HttpPath.PATHS + HttpPath.GOODS_CATECHILDREN + "id=" + cateId;
         System.out.println("子分类 = " + PATH);
-        HttpxUtils.Get(PATH, null, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),PATH, null, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 System.out.println("子分类 = " + result);
@@ -234,23 +229,6 @@ public class FMClassify extends BaseFragment {
 
             default:
                 break;
-        }
-    }
-
-    /*开始dialog*/
-    private void startProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = CustomProgress.createDialog(getActivity());
-            progressDialog.setMessage("请稍候...");
-        }
-        progressDialog.show();
-    }
-
-    /*结束dialog*/
-    private void stopProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-            progressDialog = null;
         }
     }
 

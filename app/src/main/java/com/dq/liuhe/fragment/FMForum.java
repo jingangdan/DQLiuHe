@@ -82,7 +82,7 @@ public class FMForum extends BaseFragment implements ViewPager.OnPageChangeListe
         // map.put("id", id);
         map.put("parentid", parentid);
 
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSTYPE, map, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(getActivity(),HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSTYPE, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("FMForum", "BBS_BBSTYPE" + result);
@@ -123,7 +123,6 @@ public class FMForum extends BaseFragment implements ViewPager.OnPageChangeListe
         Log.e("FMForum", "" + titles.toString());
         sfpAdapter = new SimpleFragmentPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), fragments, titles);
         tbNoScrollViewPage.setAdapter(sfpAdapter);
-        //tbNoScrollViewPage.setCurrentItem(page);
 
         tbNoScrollViewPage.setOffscreenPageLimit(titles.length);
         tbNoScrollViewPage.setOnPageChangeListener(this);

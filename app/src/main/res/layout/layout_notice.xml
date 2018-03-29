@@ -4,16 +4,16 @@
     android:layout_height="wrap_content"
     android:background="@color/bg_main"
     android:gravity="center"
-    android:padding="@dimen/x10">
+    android:padding="@dimen/x15">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/kuang_style"
         android:gravity="center"
         android:padding="@dimen/x10">
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/tv_notice"
             style="@style/text_adware"
             android:layout_width="wrap_content"

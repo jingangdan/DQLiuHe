@@ -60,6 +60,7 @@ dependencies {
     compile project(':pullToRefreshlibrary')
     compile 'com.zhy:autolayout:1.4.5'
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
 }
 
 /*强制版本号统一*/

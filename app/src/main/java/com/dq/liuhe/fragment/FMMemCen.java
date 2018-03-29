@@ -755,7 +755,7 @@ public class FMMemCen extends BaseFragment implements
     public void getVersion(final String version) {
         PATH = HttpPath.PATHS + HttpPath.CHECK_VERSION + "version=" + version;
         System.out.println("版本更新 = " + PATH);
-        HttpxUtils.Get(PATH,
+        HttpxUtils.Get(getActivity(),PATH,
                 null,
                 new Callback.CommonCallback<String>() {
                     @Override

@@ -89,7 +89,7 @@ public class ForumDetailActivity extends BaseActivity {
     private SPUserInfo spUserInfo;
     private String phone = "", token = "", uid = "";
 
-    private boolean isZan = false,isCoolection = false;
+    private boolean isZan = false, isCoolection = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +104,9 @@ public class ForumDetailActivity extends BaseActivity {
         rname = getIntent().getStringExtra("rname");
         title = getIntent().getStringExtra("title");
         addtime = getIntent().getStringExtra("addtime");
-        isZan =  "1".equals(getIntent().getStringExtra("zanis"))?true:false;
-        isCoolection = "1".equals(getIntent().getStringExtra("recordis"))?true:false;
-        Log.e("mmmmmmm2222",getIntent().getStringExtra("recordis"));
+        isZan = "1".equals(getIntent().getStringExtra("zanis")) ? true : false;
+        isCoolection = "1".equals(getIntent().getStringExtra("recordis")) ? true : false;
+        Log.e("mmmmmmm2222", getIntent().getStringExtra("recordis"));
         if (!TextUtils.isEmpty(title)) {
             tvFdTitle.setText(title);
         }
@@ -120,10 +120,10 @@ public class ForumDetailActivity extends BaseActivity {
             getComment();
         }
         //点赞，收藏
-        tvFdZan.setCompoundDrawables(null,getDrawableTop(
-                isZan?R.mipmap.icon_lt_dz_ed:R.mipmap.icon_lt_dz_nor),null,null);
-        tvFdRecord.setCompoundDrawables(null,getDrawableTop(
-                isCoolection?R.mipmap.icon_lt_sc_ed:R.mipmap.icon_lt_sc_nor),null,null);
+        tvFdZan.setCompoundDrawables(null, getDrawableTop(
+                isZan ? R.mipmap.icon_lt_dz_ed : R.mipmap.icon_lt_dz_nor), null, null);
+        tvFdRecord.setCompoundDrawables(null, getDrawableTop(
+                isCoolection ? R.mipmap.icon_lt_sc_ed : R.mipmap.icon_lt_sc_nor), null, null);
 
         getBbsDetail();
     }
@@ -174,7 +174,7 @@ public class ForumDetailActivity extends BaseActivity {
         map.put("page", "" + page);
         map.put("pagesize", "" + pagesize);
         map.put("bbsid", bbsid);
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSCOMMENT, map, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(this, HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSCOMMENT, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("FMForum_Comment", result);
@@ -214,11 +214,11 @@ public class ForumDetailActivity extends BaseActivity {
         map.put("comment", comment);
 //        final String PATH = "bbsid=" + bbsid + "&comment=" + comment + "&mid=" + mid + "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token;
 
-        String sign = "bbsid=" + bbsid + "&comment=" + etFd.getText().toString()+ "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token + "uid=" + uid  + "&key=ivKDDIZHF2b0Gjgvv2QpdzfCmhOpya5k";
+        String sign = "bbsid=" + bbsid + "&comment=" + etFd.getText().toString() + "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token + "uid=" + uid + "&key=ivKDDIZHF2b0Gjgvv2QpdzfCmhOpya5k";
         map.put("sign", MD5Util.getMD5String(sign));
 
 
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_ADDCOMMENT,
+        HttpxUtils.Get(this, HttpPath.HEADER_LIUHE + HttpPath.BBS_ADDCOMMENT,
                 map,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -261,7 +261,7 @@ public class ForumDetailActivity extends BaseActivity {
         map.put("sign", MD5Util.getMD5String(sign));
 
         Log.e("ADD_COLLECTION-map", map.toString());
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_SETZAN,
+        HttpxUtils.Get(this, HttpPath.HEADER_LIUHE + HttpPath.BBS_SETZAN,
                 map,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -275,7 +275,7 @@ public class ForumDetailActivity extends BaseActivity {
                             isZan = true;
                             setResults();
                             //
-                            tvFdZan.setCompoundDrawables(null,getDrawableTop(R.mipmap.icon_lt_dz_ed),null,null);
+                            tvFdZan.setCompoundDrawables(null, getDrawableTop(R.mipmap.icon_lt_dz_ed), null, null);
                         }
                     }
 
@@ -299,11 +299,11 @@ public class ForumDetailActivity extends BaseActivity {
     /**
      *
      */
-    public void setResults(){
+    public void setResults() {
         Intent intent = new Intent();
-        intent.putExtra("result_zan",isZan);
-        intent.putExtra("result_collect",isCoolection);
-        setResult(CodeUtils.FORUM_DETAIL_ZAN,intent);
+        intent.putExtra("result_zan", isZan);
+        intent.putExtra("result_collect", isCoolection);
+        setResult(CodeUtils.FORUM_DETAIL_ZAN, intent);
     }
 
     @OnClick({R.id.tv_fd_comment, R.id.tv_fd_zan, R.id.tv_fd_record})
@@ -333,9 +333,9 @@ public class ForumDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_fd_record:
                 if (isLogin()) {
-                    if (isCoolection){
+                    if (isCoolection) {
                         removeCollection();
-                    }else {
+                    } else {
                         addCollection();
                     }
                 } else {
@@ -348,18 +348,18 @@ public class ForumDetailActivity extends BaseActivity {
     /**
      * 收藏帖子
      */
-    public void addCollection(){
+    public void addCollection() {
         Map<String, String> map = new HashMap<>();
         map.put("id", bbsid);
         map.put("phone", phone);
         map.put("timestamp", "" + (System.currentTimeMillis() / 1000));
         map.put("token", token);
         map.put("type", "bbs");
-        String sign = "id=" + bbsid + "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token +"&type=bbs" + "&key=ivKDDIZHF2b0Gjgvv2QpdzfCmhOpya5k";
+        String sign = "id=" + bbsid + "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token + "&type=bbs" + "&key=ivKDDIZHF2b0Gjgvv2QpdzfCmhOpya5k";
         map.put("sign", MD5Util.getMD5String(sign));
 
         Log.e("ADD_COLLECTION-map", map.toString());
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_ADD_COLLECTION, map,
+        HttpxUtils.Get(this, HttpPath.HEADER_LIUHE + HttpPath.BBS_ADD_COLLECTION, map,
                 new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -369,10 +369,10 @@ public class ForumDetailActivity extends BaseActivity {
                         if (addrReturn.getStatus() == 1) {
                             isCoolection = true;
                             toast("" + addrReturn.getData());
-                            tvFdRecord.setCompoundDrawables(null,getDrawableTop(R.mipmap.icon_lt_sc_ed),null,null);
+                            tvFdRecord.setCompoundDrawables(null, getDrawableTop(R.mipmap.icon_lt_sc_ed), null, null);
                             setResults();
                         }
-                        if (addrReturn.getStatus() == 0){
+                        if (addrReturn.getStatus() == 0) {
                             toast("" + addrReturn.getData());
                         }
                     }
@@ -397,19 +397,19 @@ public class ForumDetailActivity extends BaseActivity {
     /**
      * 取消收藏帖子
      */
-    public void removeCollection(){
+    public void removeCollection() {
         Map<String, String> map = new HashMap<>();
         map.put("id", bbsid);
         map.put("phone", phone);
         map.put("timestamp", "" + (System.currentTimeMillis() / 1000));
         map.put("token", token);
         map.put("type", "bbs");
-        String sign = "id=" + bbsid + "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token +"&type=bbs" + "&key=ivKDDIZHF2b0Gjgvv2QpdzfCmhOpya5k";
+        String sign = "id=" + bbsid + "&phone=" + phone + "&timestamp=" + (System.currentTimeMillis() / 1000) + "&token=" + token + "&type=bbs" + "&key=ivKDDIZHF2b0Gjgvv2QpdzfCmhOpya5k";
         map.put("sign", MD5Util.getMD5String(sign));
 
         Log.e("ADD_COLLECTION-map", map.toString());
 
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_DEL_COLLECTION,
+        HttpxUtils.Get(this, HttpPath.HEADER_LIUHE + HttpPath.BBS_DEL_COLLECTION,
                 map,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -419,10 +419,10 @@ public class ForumDetailActivity extends BaseActivity {
                         if (addrReturn.getStatus() == 1) {
                             isCoolection = false;
                             toast("" + addrReturn.getData());
-                            tvFdRecord.setCompoundDrawables(null,getDrawableTop(R.mipmap.icon_lt_sc_nor),null,null);
+                            tvFdRecord.setCompoundDrawables(null, getDrawableTop(R.mipmap.icon_lt_sc_nor), null, null);
                             setResults();
                         }
-                        if (addrReturn.getStatus() == 0){
+                        if (addrReturn.getStatus() == 0) {
                             toast("" + addrReturn.getData());
                         }
                     }
@@ -452,7 +452,7 @@ public class ForumDetailActivity extends BaseActivity {
         map.put("id", bbsid);
 
         Log.e("FMForum", "BBS_BBSTList-map" + map.toString());
-        HttpxUtils.Get(HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSLIST, map, new Callback.CommonCallback<String>() {
+        HttpxUtils.Get(this, HttpPath.HEADER_LIUHE + HttpPath.BBS_BBSLIST, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("FMForum", "BBS_BBSTList" + result);
@@ -484,9 +484,10 @@ public class ForumDetailActivity extends BaseActivity {
 
     /**
      * 获取drawable
+     *
      * @param icon
      */
-    public Drawable getDrawableTop(int icon){
+    public Drawable getDrawableTop(int icon) {
         Drawable drawable = ContextCompat.getDrawable(this, icon);
         //为drawable设置宽高,不设置则不显示
         drawable.setBounds(0, 0, MyApplication.bbs_iconSize, MyApplication.bbs_iconSize);

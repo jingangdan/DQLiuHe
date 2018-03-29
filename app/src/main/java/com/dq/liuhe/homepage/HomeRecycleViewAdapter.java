@@ -35,28 +35,6 @@ import java.util.List;
 
 public class HomeRecycleViewAdapter extends RecyclerView.Adapter {
 
-//    /**
-//     * 类型1：搜索
-//     */
-//    public static final int TYPE_SEARCG = 0;
-//
-//    /**
-//     * 类型2：banner
-//     */
-//    public static final int TYPE_BANNER = 1;
-//    /**
-//     * 类型3：菜单
-//     */
-//    public static final int TYPE_MENU = 2;
-//    /**
-//     * 类型4：图片组
-//     */
-//    public static final int TYPE_IMGLIST = 3;
-//    /**
-//     * 类型5：商品列表
-//     */
-//    public static final int TYPE_GOODSLIST = 4;
-
     /**
      * 类型：banner appimglist menu notice glist
      */
@@ -107,11 +85,6 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter {
      */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-//        if (viewType == TYPE_SEARCG) {
-//            return new SearchViewHolder(mContext, mLayoutInflater.inflate(R.layout.layout_search, parent, false));
-//        } else
-//
         if (viewType == TYPE_BANNER) {
             return new BannerViewHolder(mContext, mLayoutInflater.inflate(R.layout.layout_banner, parent, false));
         } else if (viewType == TYPE_APPIMGLIST) {
@@ -235,7 +208,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter {
             DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
             int width = dm.widthPixels;
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) rollPagerView.getLayoutParams();
-            params.height = width / 5 * 2;//宽高比 1:3
+            params.height = width / 3 * 2;//宽高比 1:3
             rollPagerView.setLayoutParams(params);
         }
 
