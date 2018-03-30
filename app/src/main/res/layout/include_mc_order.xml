@@ -48,33 +48,25 @@
             android:id="@+id/but_mc_status0"
             style="@style/text_main"
             android:layout_weight="1"
-            android:background="@null"
-            android:drawableTop="@mipmap/ic_order_status0"
-            android:text="待付款" />
+            android:background="@mipmap/icon_mc_dfk" />
 
         <Button
             android:id="@+id/but_mc_status1"
             style="@style/text_main"
             android:layout_weight="1"
-            android:background="@null"
-            android:drawableTop="@mipmap/ic_order_status1"
-            android:text="待发货" />
+            android:background="@mipmap/icon_mc_dfh" />
 
         <Button
             android:id="@+id/but_mc_status2"
             style="@style/text_main"
             android:layout_weight="1"
-            android:background="@null"
-            android:drawableTop="@mipmap/ic_order_status2"
-            android:text="待收货" />
+            android:background="@mipmap/icon_mc_dsh" />
 
         <Button
             android:id="@+id/but_mc_status3"
             style="@style/text_main"
             android:layout_weight="1"
-            android:background="@null"
-            android:drawableTop="@mipmap/ic_order_status3"
-            android:text="已完成" />
+            android:background="@mipmap/icon_mc_ywc"/>
 
     </LinearLayout>
 
