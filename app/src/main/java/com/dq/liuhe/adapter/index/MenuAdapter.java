@@ -2,6 +2,7 @@ package com.dq.liuhe.adapter.index;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.dq.liuhe.Interface.OnItemClickListener;
 import com.dq.liuhe.R;
 import com.dq.liuhe.bean.index.Index2;
 import com.dq.liuhe.utils.BaseRecyclerViewHolder;
+import com.dq.liuhe.utils.GlideUtils;
 import com.dq.liuhe.utils.HttpPath;
 
 import java.util.List;
@@ -56,13 +58,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
                 }
             });
         }
+        if (!TextUtils.isEmpty(menuList.get(position).getThumb())) {
+            GlideUtils.loadImageView(mContext, HttpPath.IMG_LIUHE + menuList.get(position).getThumb(), holder.img);
+        }
 
-        Glide.with(mContext)
-                .load(HttpPath.IMG_LIUHE + menuList.get(position).getThumb())
-                .placeholder(R.mipmap.icon_empty)
-                .error(R.mipmap.icon_error)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(holder.img);
+//        Glide.with(mContext)
+//                .load(HttpPath.IMG_LIUHE + menuList.get(position).getThumb())
+//                .placeholder(R.mipmap.icon_empty)
+//                .error(R.mipmap.icon_error)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .into(holder.img);
 
         holder.text.setText("" + menuList.get(position).getTitle());
 

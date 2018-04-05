@@ -51,8 +51,6 @@ public class FMForum extends BaseFragment implements ViewPager.OnPageChangeListe
     @Bind(R.id.tv_forum_publish)
     TextView tvForumPublish;
 
-
-
     private String[] titles;
     private List<Fragment> fragments = new ArrayList<>();
     private ForumFragment mFragment;

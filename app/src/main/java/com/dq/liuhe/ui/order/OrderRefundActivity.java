@@ -32,7 +32,6 @@ import butterknife.OnClick;
  * 退款
  * Created by jingang on 2018/1/26.
  */
-
 public class OrderRefundActivity extends BaseActivity {
     @Bind(R.id.tv_refund_price)
     TextView tvRefundPrice;
@@ -62,7 +61,6 @@ public class OrderRefundActivity extends BaseActivity {
     /*接口地址*/
     private String MD5_PATH = "", PATH = "";
     private RequestParams params = null;
-
 
     private String reason = "", UTF_reason = "";
 

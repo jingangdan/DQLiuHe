@@ -202,7 +202,7 @@ public class FMMemCen extends BaseFragment implements
         ButterKnife.bind(this, view);
         tvNologinTitle.setText("个人中心");
 
-        initWaveView();
+//        initWaveView();
         isLogin();
         pullToRefreshView.setOnHeaderRefreshListener(this);
         pullToRefreshView.setOnFooterRefreshListener(this);

@@ -19,7 +19,7 @@ public class ImageLoopAdapter extends LoopPagerAdapter {
     private Context mContext;
     private List<Index2.DataBean.ChildBean> bannerBeans;
 
-    public ImageLoopAdapter(RollPagerView viewPager, Context mContext, List<Index2.DataBean.ChildBean> bannerBeans) {
+    public ImageLoopAdapter(RollPagerView viewPager , Context mContext, List<Index2.DataBean.ChildBean> bannerBeans) {
         super(viewPager);
         this.mContext = mContext;
         this.bannerBeans = bannerBeans;
@@ -27,15 +27,13 @@ public class ImageLoopAdapter extends LoopPagerAdapter {
 
     @Override
     public View getView(ViewGroup container, int position) {
-
         ImageView view = new ImageView(container.getContext());
         view.setScaleType(ImageView.ScaleType.CENTER_CROP);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        ImageUtils.loadIntoUseFitWidths(mContext,
+        ImageUtils.loadIntoUseFitWidth2(mContext,
                 bannerBeans.get(position).getThumb(),
                 R.mipmap.icon_empty002,
-                R.mipmap.icon_error002,
                 view);
 
         return view;
